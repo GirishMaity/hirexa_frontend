@@ -409,8 +409,14 @@
     }
     .ur-dropzone { align-self: stretch; }
 }
-@media (max-width: 720px) {
+@media (max-width: 900px) {
+    /* Tablet portrait: reduce the 146px left padding that eats too much of
+       a 768px–900px viewport. Sidebar is still visible (hides at 700px). */
     .ur-main { padding: 50px 24px 40px 90px; }
+    .ur-title-bold, .ur-title-italic { font-size: 26px; }
+}
+@media (max-width: 720px) {
+    .ur-main { padding: 50px 20px 40px 88px; }
     .ur-title { gap: 6px; }
     .ur-title-bold, .ur-title-italic { font-size: 24px; }
     .ur-list-head { padding: 16px 20px 12px; }
