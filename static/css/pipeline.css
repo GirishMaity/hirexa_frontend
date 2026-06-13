@@ -1680,10 +1680,11 @@ body {
 .dashboard .pl-main {
   position: relative;
   z-index: 3;
-  padding: 24px 55px 30px 146px;
+  padding: 24px 55px 90px 146px;
   /* Page chrome (header + sidebar) is locked; the main content area gets
        its own scroll context so steps that overflow (e.g. Step 3 with 33
-       agent cards) can scroll vertically without losing the chrome. */
+       agent cards) can scroll vertically without losing the chrome.
+       90px bottom padding clears the fixed action button. */
   height: calc(100vh - 80px);
   overflow-y: auto;
   overflow-x: hidden;
@@ -1805,8 +1806,9 @@ body {
 
 /* ---------- Two-column grid: form (fluid) + preview (fixed), responsive ---------- */
 .pl-grid {
-  display: grid;
-  grid-template-columns: 900px 460px;
+  display: flex;
+  /* display: grid;
+  grid-template-columns: 900px 460px; */
   gap: 64px;
   align-items: start;
   margin-bottom: 14px;
@@ -1817,6 +1819,7 @@ body {
 /* ---------- Form card (left) ---------- */
 .pl-form-card {
   background: #ffffff;
+  flex-grow: 1;
   /* Very faint outer hairline + soft drop shadow. */
   box-shadow:
     0 0 0 1px rgba(0, 0, 0, 0.035),
@@ -2473,58 +2476,19 @@ body {
    Continue button lines up with the preview card's right edge (per Figma)
    instead of floating all the way to the page edge. Pulled up tight under
    the preview card. */
-#step-1 .pl-actions {
-  max-width: 1424px;
-  margin-left: 50px;
-  margin-right: 0;
-  margin-top: 6px;
-}
-/* Step 2 actions row — align Continue's right edge with the side stack
-   (Application URL + Upload referral resumes) per Figma. Grid columns total
-   820 + 64 gap + 460 = 1344px, so Continue's container matches that width. */
-#step-2 .pl-actions {
-  max-width: 1344px;
-  margin-left: 50px;
-  margin-right: 0;
-  margin-top: 6px;
-}
-/* Step 3 actions row — Continue sits slightly to the right of the grid's
-   right edge for a touch more breathing room (per user). */
-#step-3 .pl-actions {
-  max-width: 1400px;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 6px;
-}
-@media (max-width: 1320px) {
-  #step-3 .pl-actions {
-    max-width: 860px;
-  }
-}
-@media (max-width: 820px) {
-  #step-3 .pl-actions {
-    max-width: 440px;
-  }
-}
-
-/* Step 4 actions row — inline (not fixed) so it sits naturally below the
-   scrollable grid, matching the Step 3 pattern. Hire Now shifted further
-   right than Step 3's Continue per user. */
+/* All step action rows pin to the same bottom-right position so Continue /
+   Hire Now always sits at the same spot regardless of which step is active.
+   Right value tracks the content-area right padding at each breakpoint. */
+#step-1 .pl-actions,
+#step-2 .pl-actions,
+#step-3 .pl-actions,
 #step-4 .pl-actions {
-  max-width: 1500px;
-  margin-left: 0;
-  margin-right: 0;
-  margin-top: 6px;
-}
-@media (max-width: 1320px) {
-  #step-4 .pl-actions {
-    max-width: 920px;
-  }
-}
-@media (max-width: 820px) {
-  #step-4 .pl-actions {
-    max-width: 480px;
-  }
+  position: fixed;
+  bottom: 32px;
+  right: 55px;
+  z-index: 10;
+  margin: 0;
+  max-width: none;
 }
 /* Continue / Hire Now button — Figma shows a soft rectangle (not a full pill)
    with a subtle drop shadow. Override the default .pl-btn pill shape here. */
@@ -3114,9 +3078,9 @@ body {
   align-items: center;
   justify-content: space-between;
   gap: 36px;
-  margin-left: 50px;
+  /* margin-left: 50px; */
   /* cap to the post card column width (fluid 1fr — use a safe max) */
-  max-width: calc(100% - 50px);
+  /* max-width: calc(100% - 50px); */
   margin-top: 14px;
   margin-bottom: 4px;
 }
@@ -4246,7 +4210,7 @@ body {
    viewport right edge. Falls back to 55px on narrow screens. */
 .lp-bottom-actions {
   position: fixed;
-  bottom: 30px;
+  bottom: 32px;
   right: max(55px, calc((100vw - 1491px) / 2));
   display: flex;
   align-items: center;
@@ -4345,9 +4309,10 @@ body {
     margin-left: 40px;
   }
   #step-1 .pl-actions,
-  #step-2 .pl-actions {
-    margin-left: 40px;
-    max-width: 100%;
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    right: 40px;
   }
 }
 
@@ -4372,9 +4337,10 @@ body {
     margin-left: 30px;
   }
   #step-1 .pl-actions,
-  #step-2 .pl-actions {
-    margin-left: 30px;
-    max-width: 100%;
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    right: 32px;
   }
 }
 
@@ -4405,11 +4371,13 @@ body {
     margin-left: 16px;
   }
   #step-1 .pl-actions,
-  #step-2 .pl-actions {
-    margin-left: 16px;
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    right: 24px;
   }
   .pl-li-row {
-    margin-left: 16px;
+    /* margin-left: 16px; */
   }
   #step-2 .pl-jd-details {
     margin-left: 16px;
@@ -4434,11 +4402,13 @@ body {
     margin-left: 16px;
   }
   #step-1 .pl-actions,
-  #step-2 .pl-actions {
-    margin-left: 16px;
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    right: 24px;
   }
   .pl-li-row {
-    margin-left: 16px;
+    /* margin-left: 16px; */
   }
   #step-2 .pl-jd-details {
     margin-left: 16px;
@@ -4451,7 +4421,7 @@ body {
 /* 1024px: tablet landscape — stack form + preview vertically, hide preview */
 @media (max-width: 1024px) {
   .dashboard .pl-main {
-    padding: 18px 22px 28px 90px;
+    padding: 18px 22px 90px 90px;
   }
   .pl-grid,
   .pl-grid-step2 {
@@ -4471,9 +4441,10 @@ body {
     margin-left: 0;
   }
   #step-1 .pl-actions,
-  #step-2 .pl-actions {
-    margin-left: 0;
-    max-width: 100%;
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    right: 22px;
   }
   .pl-li-row {
     margin-left: 0;
@@ -4499,18 +4470,12 @@ body {
   .pl-pi-summary-row {
     max-width: 100%;
   }
-  #step-3 .pl-actions {
-    max-width: 100%;
-  }
   /* Step 4 */
   .pl-fc-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     max-width: 100%;
   }
   .pl-fc-pills {
-    max-width: 100%;
-  }
-  #step-4 .pl-actions {
     max-width: 100%;
   }
   /* Step 2 deadline bar */
@@ -4530,7 +4495,18 @@ body {
     border-radius: 0;
   }
   .dashboard .pl-main {
-    padding: 14px 16px 24px 16px;
+    padding: 14px 16px 80px 16px;
+  }
+  /* On mobile restore action rows to document flow (full-width button) */
+  #step-1 .pl-actions,
+  #step-2 .pl-actions,
+  #step-3 .pl-actions,
+  #step-4 .pl-actions {
+    position: static;
+    bottom: auto;
+    right: auto;
+    margin-top: 16px;
+    max-width: 100%;
   }
   /* Collapse stepper to icons only */
   .pl-step-text {

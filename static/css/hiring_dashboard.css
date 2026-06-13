@@ -135,10 +135,11 @@ body {
   gap: 18px;
   margin-bottom: 18px;
   flex-wrap: wrap;
-  /* Width is set inline by JS to match the active filter's table card
-       width — so .hd-search's margin-left:auto pushes the search box to
-       a right edge that lines up with the table border below. */
-  max-width: 1300px;
+  /* Always fill the content area so the search bar's right edge stays fixed
+     regardless of which filter tab is active. JS sets an inline width that
+     varies per filter — !important ensures CSS always wins. */
+  width: auto !important;
+  max-width: 100%;
 }
 .hd-pills {
   display: flex;
@@ -664,6 +665,8 @@ body {
   position: absolute;
   bottom: 32px;
   left: 146px;
+  right: 60px;          /* pin to content-area right edge (mirrors padding-right: 60px) */
+  width: auto !important; /* override JS inline width so button never shifts between filters */
   display: flex;
   justify-content: flex-end;
 }

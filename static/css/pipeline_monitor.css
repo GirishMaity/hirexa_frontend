@@ -766,7 +766,8 @@ body {
   bottom: 32px;
   left: 146px;
   right: 60px;
-  max-width: 1300px;
+  /* max-width: 1300px; */
+  width: auto !important;
   display: flex;
   justify-content: flex-end;
 }
